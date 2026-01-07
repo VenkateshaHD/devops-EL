@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-backend
+  labels:
+    app: chat-backend
+spec:
+  replicas: 2   # Number of backend instances
+  selector:
+    matchLabels:
+      app: chat-backend
+  template:
+    metadata:
+      labels:
+        app: chat-backend
+    spec:
+      containers:
+      - name: chat-backend
+        image: chat-backend:1.0   # <-- local Docker image tag
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000     # backend app port inside container
+
+
+
+# kubectl apply -f deployment.yaml
+
+# kubectl get pods
+
+# // Expose your backend as a Service
+# kubectl expose deployment chat-backend --type=NodePort --port=3000
+
+
+# // kubectl get services
+# kubectl get svc
+
+# minikube service chat-backend --url
+
+

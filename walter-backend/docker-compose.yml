@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: walter-backend
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGO_URI=mongodb://mongo:27017/chatify_db
+      - NODE_ENV=development
+      # Pass other sensitive env vars from your .env file
+      # You can also use env_file: .env to load all of them
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+    networks:
+      - walter-network
+
+  mongo:
+    container_name: walter-mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - walter-mongo-data:/data/db
+    networks:
+      - walter-network
+
+volumes:
+  walter-mongo-data:
+    name: walter-mongo-data
+
+networks:
+  walter-network:
+    name: walter-network
+    driver: bridge
