@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
   backend:
-    container_name: walter-backend
+    container_name: chat-backend
     build: .
     ports:
-      - "3000:3000"
+      - "5001:3000"
     environment:
       - PORT=3000
       - MONGO_URI=mongodb://mongo:27017/chatify_db
