@@ -1,0 +1,15 @@
+- hosts: local
+  tasks:
+
+  - name: Start Minikube
+    command: minikube start
+    ignore_errors: yes
+
+  - name: Apply Kubernetes Deployment
+    command: kubectl apply -f ../deployment.yaml
+
+  - name: Apply Kubernetes Service
+    command: kubectl apply -f ../service.yaml
+
+  - name: Restart Kubernetes Pods
+    command: kubectl rollout restart deployment chat-backend

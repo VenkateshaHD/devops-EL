@@ -1,0 +1,27 @@
+- hosts: local
+  vars_files:
+    - vars.yaml
+
+  tasks:
+
+  # - name: Stop existing container if running
+  #   docker_container:
+  #     name: "{{ container_name }}"
+  #     state: stopped
+  #   ignore_errors: yes
+
+  - name: Remove existing container
+    docker_container:
+      name: "{{ container_name }}"
+      state: absent
+    ignore_errors: yes
+
+  - name: Run Chat Backend Container with ENV file
+    docker_container:
+      name: "{{ container_name }}"
+      image: "{{ image_name }}:{{ image_tag }}"
+      state: started
+      env_file: "{{ env_file_path }}"
+      ports:
+        - "{{ host_port }}:{{ container_port }}"
+
