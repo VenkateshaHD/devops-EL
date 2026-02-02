@@ -1,11 +1,13 @@
 import express from "express";
 import { signup, login, logout, updateProfile, checkAuth, requestPasswordOtp, resetPasswordWithOtp } from "../controllers/auth.controller.js";
 import { protectRoute } from "../middleware/auth.middleware.js";
-import { arcjetProtection } from "../middleware/arcjet.middleware.js";
+// Temporarily disabled - Arc jet causing timeout issues
+// import { arcjetProtection } from "../middleware/arcjet.middleware.js";
 
 const router = express.Router();
 
-router.use(arcjetProtection);
+// Temporarily disabled - causing timeout issues in Kubernetes
+// router.use(arcjetProtection);
 
 router.post("/signup", signup);
 router.post("/login", login);
