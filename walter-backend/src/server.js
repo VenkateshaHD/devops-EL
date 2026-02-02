@@ -15,7 +15,29 @@ const __dirname = path.resolve();
 const PORT = ENV.PORT || 3000;
 
 app.use(express.json({ limit: "5mb" })); // req.body
-app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
+
+// Configure CORS to allow multiple origins
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "http://192.168.49.2:30948",
+  ENV.CLIENT_URL, // fallback to environment variable
+].filter(Boolean); // remove any undefined values
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log(`CORS blocked origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
@@ -31,12 +53,12 @@ if (ENV.NODE_ENV === "production") {
   });
 }
 
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
   console.log("server runnning")
   res.send("server running");
 })
 
-server.listen(PORT,"0.0.0.0", () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log("Server running on port: " + PORT);
   connectDB();
 });

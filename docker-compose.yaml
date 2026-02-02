@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Frontend Service
+  frontend:
+    container_name: chat-frontend
+    build:
+      context: ./walter-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    environment:
+      - VITE_API_URL=http://localhost:5001/api
+    depends_on:
+      - backend
+    networks:
+      - fullstack-network
+
+  # Backend Service
+  backend:
+    container_name: chat-backend
+    build:
+      context: ./walter-backend
+      dockerfile: Dockerfile
+    ports:
+      - "5001:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=development
+    env_file:
+      - ./walter-backend/.env
+    depends_on:
+      - mongo
+    networks:
+      - fullstack-network
+
+  # MongoDB Service
+  mongo:
+    container_name: chat-mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - fullstack-network
+
+volumes:
+  mongo-data:
+    name: chat-mongo-data
+
+networks:
+  fullstack-network:
+    name: fullstack-network
+    driver: bridge

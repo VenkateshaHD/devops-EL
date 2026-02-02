@@ -175,3 +175,16 @@ From ansible folder:
 ## minikube service chat-backend --url
 
 
+
+to stop 
+
+# Stop app only
+kubectl scale deployment chat-backend --replicas=0
+
+# Stop cluster
+minikube stop
+
+# Delete everything
+minikube delete
+
+

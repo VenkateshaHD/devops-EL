@@ -2,14 +2,31 @@
   tasks:
 
   - name: Start Minikube
-    command: minikube start
+    command: minikube start --driver=docker
     ignore_errors: yes
 
-  - name: Apply Kubernetes Deployment
+  - name: Load Backend Docker image into Minikube
+    command: minikube image load chat-backend:1.0
+
+  - name: Load Frontend Docker image into Minikube
+    command: minikube image load chat-frontend:1.0
+
+  - name: Apply Backend Kubernetes Deployment
     command: kubectl apply -f ../deployment.yaml
 
-  - name: Apply Kubernetes Service
+  - name: Apply Backend Kubernetes Service
     command: kubectl apply -f ../service.yaml
+    ignore_errors: yes
 
-  - name: Restart Kubernetes Pods
+  - name: Apply Frontend Kubernetes Deployment
+    command: kubectl apply -f ../../walter-frontend/deployment.yaml
+
+  - name: Apply Frontend Kubernetes Service
+    command: kubectl apply -f ../../walter-frontend/service.yaml
+    ignore_errors: yes
+
+  - name: Restart Backend Kubernetes Pods
     command: kubectl rollout restart deployment chat-backend
+
+  - name: Restart Frontend Kubernetes Pods
+    command: kubectl rollout restart deployment chat-frontend

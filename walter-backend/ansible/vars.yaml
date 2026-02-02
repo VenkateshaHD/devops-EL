@@ -5,3 +5,10 @@ host_port: 5001
 container_port: 3000
 env_file_path: "../.env"
 
+# Frontend variables
+frontend_image_name: chat-frontend
+frontend_image_tag: "1.0"
+frontend_container_name: chat-frontend
+frontend_host_port: 8080
+frontend_container_port: 80
+

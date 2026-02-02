@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-frontend
+  labels:
+    app: chat-frontend
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: chat-frontend
+
+  template:
+    metadata:
+      labels:
+        app: chat-frontend
+
+    spec:
+      containers:
+      - name: chat-frontend
+        image: chat-frontend:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: VITE_API_URL
+          value: "/api"

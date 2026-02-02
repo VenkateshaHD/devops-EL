@@ -1,0 +1,19 @@
+- hosts: local
+  vars_files:
+    - vars.yaml
+
+  tasks:
+
+  - name: Remove existing frontend container
+    docker_container:
+      name: "{{ frontend_container_name }}"
+      state: absent
+    ignore_errors: yes
+
+  - name: Run Chat Frontend Container
+    docker_container:
+      name: "{{ frontend_container_name }}"
+      image: "{{ frontend_image_name }}:{{ frontend_image_tag }}"
+      state: started
+      ports:
+        - "{{ frontend_host_port }}:{{ frontend_container_port }}"

@@ -1,0 +1,9 @@
+- hosts: local
+  vars_files:
+    - vars.yaml
+
+  tasks:
+    - name: Build Frontend Docker Image
+      command: docker build -t {{ frontend_image_name }}:{{ frontend_image_tag }} ../../walter-frontend
+      args:
+        chdir: "{{ playbook_dir }}"

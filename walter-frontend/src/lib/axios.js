@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseURL =
   import.meta.env.MODE === "development"
-    ? "http://localhost:5001/api"
+    ? "http://192.168.49.2:30948/api"
     : import.meta.env.VITE_API_URL || "/api";
 
 export const axiosInstance = axios.create({

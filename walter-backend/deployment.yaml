@@ -23,6 +23,31 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
+        env:
+        - name: PORT
+          value: "3000"
+        - name: NODE_ENV
+          value: "development"
+        - name: CLIENT_URL
+          value: "http://192.168.49.2:30948"
+        - name: JWT_SECRET
+          value: "secret123"
+        - name: MONGO_URI
+          value: "mongodb+srv://anosvoldigoad1556_db_user:1234@cluster0.v27ox1y.mongodb.net/chatify?appName=Cluster0"
+        - name: CLOUDINARY_CLOUD_NAME
+          value: "dummy"
+        - name: CLOUDINARY_API_KEY
+          value: "dummy"
+        - name: CLOUDINARY_API_SECRET
+          value: "dummy"
+        - name: ARCJET_KEY
+          value: "123"
+        - name: RESEND_API_KEY
+          value: "123"
+        - name: EMAIL_FROM
+          value: "chatify@example.com"
+        - name: EMAIL_FROM_NAME
+          value: "chatify"
 
 
 
